@@ -1,5 +1,7 @@
 # **HSE Chat Assistant — System Architecture**
 
+![alt text](https://github.com/ilhamyulianto/hsechatassistant/blob/main/materials/image/hsechat.png)
+
 This document describes the architectural structure, components, and data flow of the **HSE Chat Assistant**, a Retrieval-Augmented Generation (RAG) system deployed inside a secure corporate environment.  
 The system provides accurate, document-grounded answers to Health, Safety & Environment (HSE) queries.
 
@@ -158,9 +160,9 @@ This allows **shared usage** across multiple applications.
 
 ---
 
-## 4. Ingestion Architecture
+## 4. PDF's context processing
 
-The ingestion process is separate from production runtime.
+The PDF processing is separate from production runtime.
 
 **File:** `ingest.py`
 
@@ -172,8 +174,8 @@ The ingestion process is separate from production runtime.
 5. Build FAISS index  
 6. Export index folder for deployment
 
-**Deployment Strategy:**
-- Ingestion runs OFFLINE on a local machine or data VM  
+**Deployment:**
+- PDF processing runs OFFLINE on a local machine or data VM  
 - Output index (`faiss_index_vX/`) is uploaded to production  
 - FastAPI loads the new index at startup  
 - Production system remains read-only and stable
@@ -183,6 +185,7 @@ This ensures safe, controlled updates of knowledge.
 ---
 
 ## 5. Runtime Sequence Flow
+![alt text](https://github.com/ilhamyulianto/hsechatassistant/blob/main/materials/image/mermaid-diagram-2025-11-14-102353.png)
 
 ### User Query → Final Answer
 
